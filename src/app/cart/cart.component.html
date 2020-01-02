@@ -1,1 +1,53 @@
-<p>cart works!</p>
+<h1 class="mb-3">
+    Shopping Cart
+    <small class="float-right">You have 1 in your cart</small>
+  </h1>
+  <table class="table">
+      <thead>
+          <tr>
+              <th width="80"></th>
+              <th>Product</th>
+              <th class="text-center" width="230">Quantity</th>
+              <th class="text-right" width="200">Price</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let item of cartItems">
+              <td>
+                  <div class="thumbnail" style="background: url('https://dummyimage.com/600x400/000/fff')">
+                  </div>
+              </td>
+              <td>Milk</td>
+              <td class="cart-actions">
+                  <div class="row no-gutters">
+                      <div class="col-3">
+                        <button class="btn btn-secondary" type="button">+</button>
+                      </div>
+                      <div class="col-6 text-center items-count">
+                          1 in cart
+                      </div>
+                      <div class="col-3">
+                        <button class="btn btn-secondary" type="button">-</button>
+                      </div>
+                  </div>
+              </td>
+              <td class="text-right">$1.00</td>
+          </tr>
+      </tbody>
+      <tfoot>
+          <tr>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th class="text-right">$1.00</th>
+          </tr>
+      </tfoot>
+  </table>
+  <p>
+      <button class="btn btn-info mr-2">
+          Checkout Cart
+      </button>
+      <button class="btn btn-danger">
+          Clear shopping cart
+      </button>
+  </p>
