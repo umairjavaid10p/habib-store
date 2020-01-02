@@ -1,0 +1,69 @@
+/* main */
+body {
+    padding-top: 80px;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+/* Login */
+.login-wrap {
+    width: 400px;
+    margin: auto;
+}
+
+/* Product card */
+.card-footer {
+    padding: 0;
+}
+
+.card-footer .btn {
+    border-radius: 0;
+    width: 100%;
+}
+
+.items-count {
+    line-height: 38px;
+}
+
+.card {
+    margin-bottom: 30px;
+}
+
+/* Product Card */
+.sticky-top {
+    top: 80px;
+}
+
+
+/* Shopping cart */
+h1 small {
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 40px;
+}
+
+.cart-actions .btn {
+    display: inline-block;
+    width: 100%;
+}
+
+.thumbnail {
+    width: 80px;
+    height: 80px;
+    border-radius: 80px;
+    background-size: cover;
+}
+
+td {
+    line-height: 80px;
+}
+
+
+
+
+
+
+
+
