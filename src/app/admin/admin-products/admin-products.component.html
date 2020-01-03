@@ -1,0 +1,29 @@
+<div class="input-group mb-3">
+    <input type="text" class="form-control" placeholder="Search" />
+    <div class="input-group-append">
+      <a routerLink="/admin/create-product" class="btn btn-success">Create new Product</a>
+    </div>
+  </div>
+  <table class="table">
+      <thead>
+          <tr>
+              <th>Title</th>
+              <th>Price</th>
+              <th>Category</th>
+              <th class="text-center" width="200">Actions</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <td>Milk</td>
+              <td>$2.00</td>
+              <td>Dairy</td>
+              <td class="text-center">
+                  <a class="btn btn-danger mr-2">
+                      Edit
+                  </a>
+                  <button class="btn btn-danger" type="button">Delete</button>
+              </td>
+          </tr>
+      </tbody>
+  </table>

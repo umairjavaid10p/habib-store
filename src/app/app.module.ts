@@ -1,6 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,6 +14,10 @@ import { ProductCardComponent } from './product-card/product-card.component';
 import { CartComponent } from './cart/cart.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { MyOrdersComponent } from './my-orders/my-orders.component';
+import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.component';
+import { AdminProductsComponent } from './admin/admin-products/admin-products.component';
+import { ProductFormComponent } from './admin/product-form/product-form.component';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -21,12 +28,18 @@ import { MyOrdersComponent } from './my-orders/my-orders.component';
     ProductCardComponent,
     CartComponent,
     CheckoutComponent,
-    MyOrdersComponent
+    MyOrdersComponent,
+    AdminOrdersComponent,
+    AdminProductsComponent,
+    ProductFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    ReactiveFormsModule,
+    AngularFireModule.initializeApp(environment.firebase, 'Habib-store'),
+    AngularFireDatabaseModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
