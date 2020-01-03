@@ -2,14 +2,11 @@
     <div class="col-md-3">
         <div class="sticky-top">
             <ul class="list-group">
-                <li class="list-group-item cursor-pointer active">
-                    All Categories
-                </li>
-                <li class="list-group-item cursor-pointer">
-                    Fruits
-                </li>
-                <li class="list-group-item cursor-pointer">
-                    Bread
+                <li
+                  [class.active]="category.isActive"
+                  *ngFor="let category of categories"
+                  (click)="filterProducts(category)" class="list-group-item cursor-pointer">
+                    {{category.name}}
                 </li>
             </ul>
         </div>

@@ -14,15 +14,15 @@
           </tr>
       </thead>
       <tbody>
-          <tr>
-              <td>Milk</td>
-              <td>$2.00</td>
-              <td>Dairy</td>
+          <tr *ngFor="let product of products">
+              <td>{{product.title}}</td>
+              <td>{{product.price | currency}}</td>
+              <td>{{product.category}}</td>
               <td class="text-center">
-                  <a class="btn btn-danger mr-2">
+                  <a [routerLink]="['/admin/edit-product', product.id]" class="btn btn-danger mr-2">
                       Edit
                   </a>
-                  <button class="btn btn-danger" type="button">Delete</button>
+                  <button (click)="removeProduct(product)" class="btn btn-danger" type="button">Delete</button>
               </td>
           </tr>
       </tbody>
