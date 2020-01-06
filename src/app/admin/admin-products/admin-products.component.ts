@@ -36,8 +36,8 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
   }
 
   filter(text) {
-    // this.filteredProducts = this.products.filter(x =>
-    //   x.title.toLowerCase().indexOf(text.toLowerCase()) !== -1);
+    this.filteredProducts = this.products.filter(x =>
+      x.title.toLowerCase().indexOf(text.toLowerCase()) !== -1);
   }
 
   deleteProduct(id) {

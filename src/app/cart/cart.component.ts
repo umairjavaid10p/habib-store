@@ -43,6 +43,7 @@ export class CartComponent implements OnInit, OnDestroy {
           this.cart = cart;
           if (cart && cart.items) {
             this.cartItems = Object.values(cart.items);
+            console.log(cart, this.cartItems)
             this.totalItems = this.cartService.getTotalItems(cart);
             this.totalAmount = this.cartService.getTotalAmount(cart);
           } else {
@@ -68,7 +69,7 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   clearShoppingCart() {
-    if (confirm('Are you sure you want to clea shopping cart?')) {
+    if (confirm('Are you sure you want to clear shopping cart?')) {
       this.cartService.clearShoppingCart(this.cartId);
     }
   }

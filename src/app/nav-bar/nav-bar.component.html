@@ -14,11 +14,11 @@
               </span>
             </a>
           </li>
-          <li class="nav-item" routerLinkActive="active">
+          <li *ngIf="!loggedInUser" class="nav-item" routerLinkActive="active">
             <a routerLink="/login" class="nav-link">Login</a>
           </li>
         </ul>
-        <ul class="navbar-nav">
+        <ul *ngIf="loggedInUser" class="navbar-nav">
           <li ngbDropdown class="nav-item dropdown"> 
             <a ngbDropdownToggle class="nav-link dropdown-toggle cursor-pointer" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Umair
@@ -27,7 +27,7 @@
               <a routerLink="/my-orders" class="dropdown-item" >My Orders</a>
               <a routerLink="/admin/manage-products" class="dropdown-item">Manage Products</a>
               <a routerLink="/admin/manage-orders" class="dropdown-item">Manage Orders</a>
-              <a class="dropdown-item">Logout</a>
+              <a (click)="logOut()" class="dropdown-item">Logout</a>
             </div>
           </li>
         </ul>

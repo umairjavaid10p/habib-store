@@ -4,6 +4,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -42,6 +43,7 @@ import { OrderSuccessComponent } from './order-success/order-success.component';
     ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebase, 'Habib-store'),
     AngularFireDatabaseModule,
+    AngularFireAuthModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

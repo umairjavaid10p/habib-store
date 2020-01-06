@@ -69,7 +69,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     order.items = this.cartItems;
     order.amount = this.totalAmount;
     order.isComplete = false;
-    order.userId = '1'; // this.user.id;
+    order.userId = '1';
     order.datePlaced = new Date().toISOString();
     this.orderService.createOrder(order).then(() => {
       this.cartService.clearShoppingCart(this.cartId);
