@@ -70,4 +70,9 @@ export class ProductService {
       .object(url)
       .update(body);
   }
+
+  deleteProduct(id: string) {
+    const url = `${FIREBASE_TABLES.products}/${id}`;
+    return this.db.object(url).remove();
+  }
 }

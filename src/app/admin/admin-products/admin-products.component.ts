@@ -11,6 +11,7 @@ import { IProduct } from 'src/app/interfaces/product.interface';
 export class AdminProductsComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
   products: IProduct[];
+  filteredProducts: IProduct[] = [];
 
   constructor(
     private productService: ProductService
@@ -29,13 +30,20 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
       this.productService
         .getProducts()
         .subscribe(res => {
-          this.products = res;
+          this.filteredProducts = this.products = res;
         })
     );
   }
 
-  removeProduct(product: IProduct) {
-    console.log(product);
+  filter(text) {
+    // this.filteredProducts = this.products.filter(x =>
+    //   x.title.toLowerCase().indexOf(text.toLowerCase()) !== -1);
+  }
+
+  deleteProduct(id) {
+    if (confirm('Are you sure you want to delete this product?')) {
+      this.productService.deleteProduct(id);
+    }
   }
 
 }

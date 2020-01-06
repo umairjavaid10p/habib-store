@@ -18,6 +18,7 @@ import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.componen
 import { AdminProductsComponent } from './admin/admin-products/admin-products.component';
 import { ProductFormComponent } from './admin/product-form/product-form.component';
 import { environment } from 'src/environments/environment';
+import { OrderSuccessComponent } from './order-success/order-success.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { environment } from 'src/environments/environment';
     MyOrdersComponent,
     AdminOrdersComponent,
     AdminProductsComponent,
-    ProductFormComponent
+    ProductFormComponent,
+    OrderSuccessComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,5 @@
 <div class="input-group mb-3">
-    <input type="text" class="form-control" placeholder="Search" />
+    <input #search type="text" (keyup)="filter(search.value)" class="form-control" placeholder="Search" />
     <div class="input-group-append">
       <a routerLink="/admin/create-product" class="btn btn-success">Create new Product</a>
     </div>
@@ -22,7 +22,7 @@
                   <a [routerLink]="['/admin/edit-product', product.id]" class="btn btn-danger mr-2">
                       Edit
                   </a>
-                  <button (click)="removeProduct(product)" class="btn btn-danger" type="button">Delete</button>
+                  <button (click)="deleteProduct(product.id)" class="btn btn-danger" type="button">Delete</button>
               </td>
           </tr>
       </tbody>

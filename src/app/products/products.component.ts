@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ProductService } from '../services/product.service';
-import { IProductCategory } from '../interfaces/product.interface';
+import { IProductCategory, IProduct, ICart } from '../interfaces/product.interface';
+import { CartService } from '../services/cart.service';
 
 @Component({
   selector: 'app-products',
@@ -9,16 +10,33 @@ import { IProductCategory } from '../interfaces/product.interface';
   styleUrls: ['./products.component.css']
 })
 export class ProductsComponent implements OnInit {
-  subscriptions: Subscription[] = [];
   categories: IProductCategory[];
+  products: IProduct[] = [];
+  filteredProducts: IProduct[] = [];
+  subscriptions: Subscription[] = [];
+  cart: ICart;
+
 
   constructor(
-    private productService: ProductService
+    private productService: ProductService,
+    private cartService: CartService,
   ) { }
 
   ngOnInit() {
     this.getCategories();
     this.getProducts();
+    this.getCart();
+  }
+
+  async getCart() {
+    const cartId = await this.cartService.getCartId();
+    this.subscriptions.push(
+      this.cartService
+        .getCart(cartId)
+        .subscribe((cart: ICart) => {
+          this.cart = cart;
+        })
+    );
   }
 
   getCategories() {
@@ -41,7 +59,7 @@ export class ProductsComponent implements OnInit {
       this.productService
         .getProducts()
         .subscribe(res => {
-          // this.categories = [category, ...res];
+          this.filteredProducts = this.products = res;
         })
     );
   }
@@ -49,6 +67,11 @@ export class ProductsComponent implements OnInit {
   filterProducts(category: IProductCategory) {
     this.categories.map(x => x.isActive = false);
     category.isActive = true;
+    if (!category.id) {
+      this.filteredProducts = this.products;
+    } else {
+      this.filteredProducts = this.products.filter(x => x.category === category.name);
+    }
   }
 
 }
