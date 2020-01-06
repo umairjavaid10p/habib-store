@@ -3,11 +3,11 @@
         <img class="mb-4" src="https://angular.io/assets/images/logos/angular/angular.svg"
         alt="" width="72" height="72">
         <h1 class="h3 mb-3 font-weight-normal">
-            <span *ngIf="!isLoading">Sign in</span>
-            <span *ngIf="isLoading">Signing in...</span>
+            <span *ngIf="!loading">Please sign in</span>
+            <span *ngIf="loading">Signing in...</span>
         </h1>
-        <button (click)="login()" class="btn btn-lg btn-primary btn-block"
-            type="button">Sign in with Google</button>
+        <button *ngIf="!loading" class="btn btn-lg btn-primary btn-block"
+            type="button" (click)="loginWithGoogle()">Sign in with Google</button>
         <p class="mt-5 mb-3 text-muted">&copy; 2017-2019</p>
     </div>
-  </div>
+</div>

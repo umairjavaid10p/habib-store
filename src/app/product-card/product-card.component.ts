@@ -1,6 +1,6 @@
-import { Component, OnInit, OnChanges, Input, SimpleChanges } from '@angular/core';
-import { IProduct, ICart } from '../interfaces/product.interface';
-import { CartService } from '../services/cart.service';
+import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { IProduct, ICart } from '../common/interfaces/product';
+import { ShoppingCartService } from '../services/shopping-cart.service';
 
 @Component({
   selector: 'app-product-card',
@@ -14,7 +14,7 @@ export class ProductCardComponent implements OnChanges {
   quantity = 0;
 
   constructor(
-    private cartService: CartService
+    private shoppingCartService: ShoppingCartService
   ) {}
 
   ngOnChanges(changes: SimpleChanges) {
@@ -30,9 +30,9 @@ export class ProductCardComponent implements OnChanges {
   async addToCart(product: IProduct) {
     this.quantity += 1;
     if (!this.cartId) {
-      this.cartId = await this.cartService.getCartId();
+      this.cartId = await this.shoppingCartService.getCartId();
     }
-    this.cartService.updateCart(product, this.cartId, this.quantity);
+    this.shoppingCartService.updateCart(product, this.cartId, this.quantity);
   }
 
   async subFromCart(product: IProduct) {
@@ -41,9 +41,8 @@ export class ProductCardComponent implements OnChanges {
     }
     this.quantity -= 1;
     if (!this.cartId) {
-      this.cartId = await this.cartService.getCartId();
+      this.cartId = await this.shoppingCartService.getCartId();
     }
-    this.cartService.updateCart(product, this.cartId, this.quantity);
+    this.shoppingCartService.updateCart(product, this.cartId, this.quantity);
   }
-
 }

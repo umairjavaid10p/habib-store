@@ -1,14 +1,12 @@
 <div class="row">
     <div class="col-md-6">
-        <form [formGroup]="productform" (ngSubmit)="onSubmit()">
+        <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
             <div class="form-group">
                 <label for="title">Title</label>
-                <input formControlName="title" type="text" id="title" class="form-control" />
-                <div
-                    *ngIf="productform.controls.title.dirty && !productform.controls.title.valid"
-                    class="alert alert-danger"
-                >
-                    <div *ngIf="productform.controls.title.errors.required">
+                <input formControlName="title"
+                    type="text" id="title" class="form-control" />
+                <div class="alert alert-danger" *ngIf="!productForm.get('title').pristine && !productForm.get('title').valid">
+                    <div *ngIf="productForm.get('title').errors.required">
                         Title is required.
                     </div>
                 </div>
@@ -19,13 +17,12 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text" id="basic-addon1">$</span>
                     </div>
-                    <input formControlName="price" min="0" max="9999" type="number" id="price" class="form-control" />
+                    <input min="0" max="9999" formControlName="price"
+                        type="number" id="price" class="form-control" />
                 </div>
-                <div
-                    *ngIf="productform.controls.price.dirty && !productform.controls.price.valid"
-                    class="alert alert-danger"
-                >
-                    <div *ngIf="productform.controls.price.errors.required">
+                <div class="alert alert-danger"
+                    *ngIf="!productForm.get('price').pristine && !productForm.get('price').valid">
+                    <div *ngIf="productForm.get('price').errors.required">
                         Price is required.
                     </div>
                 </div>
@@ -33,46 +30,40 @@
             <div class="form-group">
                 <label for="category">Category</label>
                 <select formControlName="category" id="category" class="form-control">
-                    <option *ngFor="let category of categories" [value]="category.name">
-                        {{category.name}}
+                    <option *ngFor="let item of categories" [ngValue]="item.name">
+                        {{item.name}}
                     </option>
                 </select>
-                <div
-                    *ngIf="productform.controls.category.dirty && !productform.controls.category.valid"
-                    class="alert alert-danger"
-                >
-                    <div *ngIf="productform.controls.category.errors.required">
+                <div class="alert alert-danger"
+                    *ngIf="!productForm.get('category').pristine && !productForm.get('category').valid">
+                    <div *ngIf="productForm.get('category').errors.required">
                         Category is required.
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <label for="imageUrl">Image Url</label>
-                <input formControlName="imageUrl" type="text" id="imageUrl" class="form-control" />
-                <div
-                    *ngIf="productform.controls.imageUrl.dirty && !productform.controls.imageUrl.valid"
-                    class="alert alert-danger"
-                >
-                    <div *ngIf="productform.controls.imageUrl.errors.required">
+                <input formControlName="imageUrl"
+                    type="text" id="imageUrl" class="form-control" />
+                <div class="alert alert-danger"
+                    *ngIf="!productForm.get('imageUrl').pristine && !productForm.get('imageUrl').valid">
+                    <div *ngIf="productForm.get('imageUrl').errors.required">
                         Image Url is required.
                     </div>
                 </div>
             </div>
             <div>
-                <button
-                    [disabled]="productform.invalid"
-                    type="submit" class="btn btn-primary"
-                >Submit</button>
-                <a class="btn btn-default">Cancel</a>
+                <button type="submit" class="btn btn-primary" [disabled]="!productForm.valid">Submit</button>
+                <a class="btn btn-default" routerLink="/admin/products">Cancel</a>
             </div>
-        </form >
+        </form>
     </div>
     <div class="col-md-6">
         <div class="card">
-            <img class="card-img-top" src="{{productform.controls.imageUrl.value ? productform.controls.imageUrl.value : 'https://dummyimage.com/600x220/000/fff'}}" alt="Card image cap">
+            <img class="card-img-top" src="{{this.productForm.get('imageUrl').value || 'https://dummyimage.com/600x220/000/fff'}}" alt="Card image cap">
             <div class="card-body">
-              <h2 class="card-title">{{productform.controls.title.value ? productform.controls.title.value : 'Add title'}}</h2>
-              <h5 class="card-text">{{productform.controls.category.value ? productform.controls.category.value : 'Select Category'}}</h5>
+              <h2 class="card-title">{{this.productForm.get('title').value || 'Add Title'}}</h2>
+              <h5 class="card-text">{{this.productForm.get('category').value || 'Add Category'}}</h5>
             </div>
         </div>
     </div>

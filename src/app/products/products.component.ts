@@ -1,37 +1,51 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { IProduct, ICategory, ICart } from '../common/interfaces/product';
 import { Subscription } from 'rxjs';
-import { ProductService } from '../services/product.service';
-import { IProductCategory, IProduct, ICart } from '../interfaces/product.interface';
-import { CartService } from '../services/cart.service';
+import { ProductsService } from '../services/products.service';
+import { ShoppingCartService } from '../services/shopping-cart.service';
 
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css']
 })
-export class ProductsComponent implements OnInit {
-  categories: IProductCategory[];
+export class ProductsComponent implements OnInit, OnDestroy {
   products: IProduct[] = [];
   filteredProducts: IProduct[] = [];
   subscriptions: Subscription[] = [];
+  allCategory: ICategory = {
+    id: '', name: 'All categories', isActive: true,
+  };
+  categories: ICategory[] = [this.allCategory];
   cart: ICart;
 
-
   constructor(
-    private productService: ProductService,
-    private cartService: CartService,
+    private productsService: ProductsService,
+    private shoppingCartService: ShoppingCartService,
   ) { }
 
   ngOnInit() {
+    this.getAllProducts();
     this.getCategories();
-    this.getProducts();
     this.getCart();
   }
 
-  async getCart() {
-    const cartId = await this.cartService.getCartId();
+  ngOnDestroy() {
+    this.subscriptions.forEach(x => x.unsubscribe);
+  }
+
+  getCategories() {
     this.subscriptions.push(
-      this.cartService
+      this.productsService.getProductCategories().subscribe(categories => {
+        this.categories = [this.allCategory, ...categories];
+      })
+    );
+  }
+
+  async getCart() {
+    const cartId = await this.shoppingCartService.getCartId();
+    this.subscriptions.push(
+      this.shoppingCartService
         .getCart(cartId)
         .subscribe((cart: ICart) => {
           this.cart = cart;
@@ -39,33 +53,19 @@ export class ProductsComponent implements OnInit {
     );
   }
 
-  getCategories() {
+  getAllProducts() {
     this.subscriptions.push(
-      this.productService
-        .getProductCategories()
-        .subscribe(res => {
-          const category: IProductCategory = {
-            id: '',
-            name: 'All Categories',
-            isActive: true,
-          };
-          this.categories = [category, ...res];
-        })
+      this.productsService.getAllProducts().subscribe(products => {
+        this.filteredProducts = this.products = products;
+      })
     );
   }
 
-  getProducts() {
-    this.subscriptions.push(
-      this.productService
-        .getProducts()
-        .subscribe(res => {
-          this.filteredProducts = this.products = res;
-        })
-    );
-  }
-
-  filterProducts(category: IProductCategory) {
-    this.categories.map(x => x.isActive = false);
+  filterCategory(category?: ICategory) {
+    this.categories.map(x => {
+      x.isActive = false;
+      return x;
+    });
     category.isActive = true;
     if (!category.id) {
       this.filteredProducts = this.products;

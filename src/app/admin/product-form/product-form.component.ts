@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { IProductCategory, IProduct } from 'src/app/interfaces/product.interface';
-import { ProductService } from 'src/app/services/product.service';
-import { Subscription } from 'rxjs';
+import { Validators, FormControl, FormGroup } from '@angular/forms';
+import { ICategory, IProduct } from 'src/app/common/interfaces/product';
+import { ProductsService } from 'src/app/services/products.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-product-form',
@@ -11,70 +11,69 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./product-form.component.css']
 })
 export class ProductFormComponent implements OnInit, OnDestroy {
-  productform: FormGroup;
-  categories: IProductCategory[];
+  productForm: FormGroup;
+  categories: ICategory[] = [];
+  prodId: string;
   subscriptions: Subscription[] = [];
-  id: string;
 
   constructor(
-    private productService: ProductService,
+    private productsService: ProductsService,
     private router: Router,
-    private activatedRoute: ActivatedRoute,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit() {
     this.getCategories();
     this.initializeForm();
-    this.id = this.activatedRoute.snapshot.params.id;
-    if (this.id) {
-      this.populateForm(this.id);
+    this.prodId = this.activatedRoute.snapshot.params.id;
+    if (this.prodId) {
+      this.getProductAndInitialize(this.prodId);
     }
   }
 
   ngOnDestroy() {
-    this.subscriptions.map(subs => subs.unsubscribe());
+    this.subscriptions.forEach(x => x.unsubscribe);
   }
 
-  initializeForm() {
-    this.productform = new FormGroup({
-      title: new FormControl('', Validators.required),
-      price: new FormControl('', Validators.required),
-      category: new FormControl('', Validators.required),
-      imageUrl: new FormControl('', Validators.required),
-    });
-  }
-
-  populateForm(id: string) {
+  getProductAndInitialize(id: string) {
     this.subscriptions.push(
-      this.productService.getProductById(id)
+      this.productsService.getProduct(id)
         .subscribe((product: IProduct) => {
-          this.productform.controls.title.setValue(product.title);
-          this.productform.controls.price.setValue(product.price);
-          this.productform.controls.category.setValue(product.category);
-          this.productform.controls.imageUrl.setValue(product.imageUrl);
+          // const selectedCategory = this.categories.find(x => x.name === product.category.name);
+          this.productForm.controls.title.setValue(product.title);
+          this.productForm.controls.price.setValue(product.price);
+          this.productForm.controls.category.setValue(product.category);
+          this.productForm.controls.imageUrl.setValue(product.imageUrl);
         })
     );
   }
 
   getCategories() {
     this.subscriptions.push(
-      this.productService
-        .getProductCategories()
-        .subscribe(res => {
-          this.categories = res;
-        })
+      this.productsService.getProductCategories().subscribe(categories => {
+        this.categories = categories;
+      })
     );
   }
 
+  initializeForm() {
+    this.productForm = new FormGroup({
+      title: new FormControl('', [ Validators.required ]),
+      price: new FormControl('', [ Validators.required ]),
+      category: new FormControl('', [ Validators.required ]),
+      imageUrl: new FormControl('', [ Validators.required ]),
+    });
+  }
+
   onSubmit() {
-    const body: IProduct = this.productform.value;
-    if (this.id) {
-      this.productService.updateProduct(this.id, body).then(() => {
-        this.router.navigate(['/admin/manage-products']);
+    const product: IProduct = this.productForm.value;
+    if (this.prodId) {
+      this.productsService.updateProduct(product, this.prodId).then(() => {
+        this.router.navigate(['/admin/products']);
       });
     } else {
-      this.productService.createProduct(body).then(() => {
-        this.router.navigate(['/admin/manage-products']);
+      this.productsService.createProduct(product).then(() => {
+        this.router.navigate(['/admin/products']);
       });
     }
   }

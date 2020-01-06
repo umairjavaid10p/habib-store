@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ProductsService } from 'src/app/services/products.service';
+import { IProduct } from 'src/app/common/interfaces/product';
 import { Subscription } from 'rxjs';
-import { ProductService } from 'src/app/services/product.service';
-import { IProduct } from 'src/app/interfaces/product.interface';
 
 @Component({
   selector: 'app-admin-products',
@@ -9,29 +9,27 @@ import { IProduct } from 'src/app/interfaces/product.interface';
   styleUrls: ['./admin-products.component.css']
 })
 export class AdminProductsComponent implements OnInit, OnDestroy {
-  subscriptions: Subscription[] = [];
-  products: IProduct[];
+  products: IProduct[] = [];
   filteredProducts: IProduct[] = [];
+  subscriptions: Subscription[] = [];
 
   constructor(
-    private productService: ProductService
+    private productsService: ProductsService,
   ) { }
 
   ngOnInit() {
-    this.getProducts();
+    this.getAllProducts();
   }
 
   ngOnDestroy() {
-    this.subscriptions.map(x => x.unsubscribe());
+    this.subscriptions.forEach(x => x.unsubscribe);
   }
 
-  getProducts() {
+  getAllProducts() {
     this.subscriptions.push(
-      this.productService
-        .getProducts()
-        .subscribe(res => {
-          this.filteredProducts = this.products = res;
-        })
+      this.productsService.getAllProducts().subscribe(products => {
+        this.filteredProducts = this.products = products;
+      })
     );
   }
 
@@ -42,8 +40,7 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
 
   deleteProduct(id) {
     if (confirm('Are you sure you want to delete this product?')) {
-      this.productService.deleteProduct(id);
+      this.productsService.deleteProduct(id);
     }
   }
-
 }

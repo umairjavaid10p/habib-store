@@ -1,11 +1,11 @@
-  <div class="row">
+<div class="row">
     <div class="col-md-3">
         <div class="sticky-top">
             <ul class="list-group">
-                <li
-                  [class.active]="category.isActive"
-                  *ngFor="let category of categories"
-                  (click)="filterProducts(category)" class="list-group-item cursor-pointer">
+                <li class="list-group-item cursor-pointer"
+                    [class.active]="category.isActive"
+                    *ngFor="let category of categories"
+                    (click)="filterCategory(category)">
                     {{category.name}}
                 </li>
             </ul>
@@ -13,12 +13,12 @@
     </div>
     <div class="col-md-9">
         <div class="row">
-          <div class="col-lg-4 col-sm-6 col-12" *ngFor="let product of filteredProducts">
-            <app-product-card
-              [cart]="cart"
-              [product]="product"
-            ></app-product-card>
-          </div>
+            <div class="col-lg-4 col-sm-6 col-12" *ngFor="let product of filteredProducts">
+                <app-product-card
+                    [cart]="cart"
+                    [product]="product">
+                </app-product-card>
+            </div>
         </div>
     </div>
 </div>

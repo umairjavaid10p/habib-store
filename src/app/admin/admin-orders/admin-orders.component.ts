@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { OrderService } from 'src/app/services/order.service';
-import { IOrder } from 'src/app/interfaces/product.interface';
+import { Subscription } from 'rxjs';
+import { IOrder } from 'src/app/common/interfaces/product';
 
 @Component({
   selector: 'app-admin-orders',

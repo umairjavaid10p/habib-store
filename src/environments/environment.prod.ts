@@ -1,12 +1,12 @@
 export const environment = {
   production: true,
   firebase: {
-    apiKey: 'AIzaSyBJ-BvDB7JHgcUp8WEiUiFvVLITBjR0WMk',
-    authDomain: 'habib-store.firebaseapp.com',
-    databaseURL: 'https://habib-store.firebaseio.com',
-    projectId: 'habib-store',
-    storageBucket: 'habib-store.appspot.com',
-    messagingSenderId: '1013126480741',
-    appId: '1:1013126480741:web:40a97e191f569be216578c'
-  },
+    apiKey: 'AIzaSyAr2KhH8-Ht5hkZMu_yHrLm8XSq4kUdVOk',
+    authDomain: 'fir-mediwod.firebaseapp.com',
+    databaseURL: 'https://fir-mediwod.firebaseio.com',
+    projectId: 'firebase-mediwod',
+    storageBucket: 'firebase-mediwod.appspot.com',
+    messagingSenderId: '898798576522',
+    appId: '1:898798576522:web:ca78d83482cba7208d5e73'
+  }
 };
